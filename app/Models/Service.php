@@ -10,7 +10,8 @@ class Service extends Model
         'user_id',
         'name',
         'description',
-        'type'
+        'type',
+        'language',
     ];
     protected $primaryKey = 'id';
     protected $keyType = 'string';
