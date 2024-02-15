@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('projects', function (Blueprint $table) {
-            $table->uuid('id')->default(DB::raw('(UUID())'))->primary();
+            $table->uuid('id')->primary();
             $table->enum('status', ['application', 'planing', 'ongoing', 'finished'])->default('application');
             $table->dateTime('payment_due_date')->nullable();
             $table->dateTime('paid_at')->nullable();
