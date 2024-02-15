@@ -18,9 +18,11 @@ class DatabaseSeeder extends Seeder
         User::query()->delete();
 
         for ($i = 1; $i <= 20; $i++) {
+            $email = fake()->unique()->safeEmail;
             if ($i > 10) {
                 User::factory()->create([
-                    'avatar_url' => 'https://api.dicebear.com/7.x/adventurer/svg?seed=' . fake()->numberBetween(1, 1000),
+                    'avatar_url' => 'https://api.dicebear.com/7.x/adventurer/svg?seed=' . $email,
+                    'email' => $email,
                     'role' => 'user',
                     'created_at' => fake()->dateTimeBetween('-1 year', 'now'),
                 ]);
@@ -28,7 +30,8 @@ class DatabaseSeeder extends Seeder
                 $id = fake()->uuid;
                 User::factory()->create([
                     'id' => $id,
-                    'avatar_url' => 'https://api.dicebear.com/7.x/adventurer/svg?seed=' . fake()->numberBetween(1, 1000),
+                    'avatar_url' => 'https://api.dicebear.com/7.x/adventurer/svg?seed=' . $email,
+                    'email' => $email,
                     'role' => 'client',
                     'created_at' => fake()->dateTimeBetween('-1 year', 'now'),
                 ]);
@@ -45,11 +48,13 @@ class DatabaseSeeder extends Seeder
 
         foreach ($roles as $role) {
             $id = fake()->uuid;
+            $email = $role . '@email.com';
+
             User::factory()->create([
                 'id' => $id,
                 'name' => 'Demo ' . $role,
                 'email' => $role . '@email.com',
-                'avatar_url' => 'https://api.dicebear.com/7.x/adventurer/svg?seed=' . $id,
+                'avatar_url' => 'https://api.dicebear.com/7.x/adventurer/svg?seed=' . $email,
                 'password' => $role,
                 'role' => $role,
                 'created_at' => fake()->dateTimeBetween('-1 year', 'now'),

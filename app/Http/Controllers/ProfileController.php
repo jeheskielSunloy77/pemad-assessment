@@ -8,7 +8,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -42,16 +41,7 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         try {
-            $user = $request->user();
-            $this->authorize('update', $user);
-
-            $user->fill($request->validated());
-            if ($user->isDirty('email')) {
-                $user->email_verified_at = null;
-            }
-
-
-            $user->save();
+            $this->repository->update($request->user()->id, $request);
 
             return redirect()->route('profile.edit')->with('message', 'Profile updated!');
         } catch (\Throwable $th) {
